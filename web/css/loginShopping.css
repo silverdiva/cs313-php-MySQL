@@ -1,0 +1,16 @@
+/*loginShopping-v3.php styling
+ (Welcome Account Page / index.php styling)
+*/
+
+.form {
+	margin-left: 10px;
+}
+
+h3 {
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.thankyou {
+    height: 400px;
+}
