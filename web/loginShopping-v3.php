@@ -40,7 +40,7 @@ include_once "lib/config.php";
 
 				<div class="form">
 					<h2>Log In</h2>
-					<form action="checkUser-v1.php" method="post" name="login">
+					<form action="checkUser-v1.php" method="post" name="username">
 						<input type="text" name="username" placeholder="Username" style="width:50%" required />
 						
 						<br>
@@ -48,13 +48,15 @@ include_once "lib/config.php";
 						<br>
 						<br>
 
-						<a class="button-thankyou" href="checkUser-v1.php"> Login To Shop</a>
+						<!--<a class="button-thankyou" href="checkUser-v1.php"> Login To Shop</a>-->
+						<input type="submit" value="Submit">
 						
 						<br>
 						<br>
 						
 						<h2>Don't have an shopping account yet?</h2>
 						<a class="button-thankyou" href="signUpShopping-v3.php"> Sign Up Here</a>
+						
 						
 						<br/><br/>
 					</form>

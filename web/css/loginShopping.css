@@ -1,9 +1,10 @@
 /*loginShopping-v3.php styling
- (Welcome Account Page / index.php styling)
+ (Welcome Account Page / index.php styling / addUser-v6.php)
 */
 
 .form {
 	margin-left: 10px;
+	padding-bottom: 70px;
 }
 
 h3 {
@@ -14,3 +15,5 @@ h3 {
 .thankyou {
     height: 400px;
 }
+
+

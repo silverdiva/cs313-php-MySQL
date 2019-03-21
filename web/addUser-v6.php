@@ -7,11 +7,62 @@ require "lib/lib-db.php";
 
 
 /* [MUTE NOTIFICATIONS] */
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-?>
-          
+//define login fields
+$username = $_POST["username"];
+$password = $_POST["password"];	
+			
+//validate db login
+$db = new PDO('mysql:host=localhost;port=3306;dbname=id9019731_llanoskimberlyshoppingcart','id9019731_llanoskimberlyshoppingcart', 'Lak3bell');
+
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+  // Validate user inputs
+            if ($username == null || $password == null ) 
+				{
+             	echo 'You must fill in all fields.';
+            	} 
+
+				else 
+					{
+					//hash the password
+					$hashpass = password_hash($password, PASSWORD_DEFAULT);
+					//test to see if the user already exists
+					// Add the user into the database
+					$query = 'INSERT INTO user_table
+								 (username, password)
+							  VALUES
+								 (:username, :password)';
+					$statement = $db->prepare($query);
+					$statement->bindValue(':username', $username);
+					$statement->bindValue(':password', $hashpass);
+								//debugging
+								print_r($username);
+								print_r($_SESSION);
+								print_r($query);
+
+					if ($statement->execute()) 
+					{
+						$statement->closeCursor();
+						$_SESSION["username"] = $username;
+						header("Location: loginShopping-v3.php"); 
+						} 
+						
+						else 
+						{
+						echo 'User already exists.';
+									//debugging
+									print_r($username);
+									print_r($_SESSION);
+									print_r($query);
+						}
+					}
+  ?>
+
+
 
 	<!DOCTYPE html>
 	<html lang="en">
@@ -42,62 +93,32 @@ ini_set('display_errors', 1);
 		<main>
 			<div class="form">
 				<h2>You've Come to the Right Place. Please create a username and password.</h2>
+				<p>
+					After you've created your username and password, you will log into your account on the next page.
+				</p>
 				<form action="addUser-v6.php" method="post">
-<?php
-					
-					  // Validate inputs
-            if ($username == null || $password == null ) {
-                echo 'You must fill in all fields.';
-            } else {
-                //hash the password
-                $hashpass = password_hash($password, PASSWORD_DEFAULT);
-                //test to see if the user already exists
-                // Add the user into the database
-                $query = 'INSERT INTO user_table
-                             (username, password)
-                          VALUES
-                             (:username, :password)';
-                $statement = $this->db->prepare($query);
-                $statement->bindValue(':username', $username);
-                $statement->bindValue(':password', $hashpass);
-                if ($statement->execute()) {
-                  $statement->closeCursor();
-                  $_SESSION["username"] = $username;
-                  header("Location: loginShopping-v3.php");
-                } else {
-                  echo 'User already exists.';
-					
-					//debugging
-					print_r($username);
-					print_r($_SESSION);
-					print_r($query);
-                }
-            }
-?>
-				<br>
-				<br>
 					<input type="text" name="username" placeholder="Username" style="width:50%" required />
-
 					<br>
 					<input type="password" name="password" placeholder="Password" style="width:50%" required />
 					<br>
 					<br>
 
-					<a class="button-thankyou" href="welcomeNewUser.php">Submit</a>
-
+					<!--<a class="button-thankyou" href="welcomeNewUser.php">Submit</a>-->
+					<input type="submit" value="Submit">
 				</form>
 			</div>
 		</main>
-	<footer>
-        <?php include 'modules/footer.php'; ?>
-    </footer>
 
-    <!-- JavaScript using jQuery library -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-    <script src="scripts/scripts.js"></script>
+		<footer>
+			<?php include 'modules/footer.php';?>
+		</footer>
 
-</body>
+		<!-- JavaScript using jQuery library -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+		<script src="scripts/scripts.js"></script>
 
-</html>
+	</body>
+
+	</html>
