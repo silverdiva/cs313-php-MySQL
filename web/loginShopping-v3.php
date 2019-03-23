@@ -1,5 +1,17 @@
 <?php
 include_once "lib/config.php";
+
+    session_start();
+    if
+		(!isset($_SESSION['userAuthorized'])) 
+	{
+        session_destroy();
+	}
+        
+		
+		else {
+			header("Location: index-cart.php");
+		}
 ?>
 
 	<!DOCTYPE html>

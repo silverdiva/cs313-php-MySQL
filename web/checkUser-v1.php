@@ -6,21 +6,11 @@ require "lib/lib-db.php";
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$result = null;
-	  
-if(password_verify($_POST['password'], $result[0]['password']) ) {
-    $_SESSION['userAuthorized'] = $_POST['username'];
-    header("Location: index-cart.php");
-	
-	//for debugging
-	print_r($_SESSION);
-	print_r($_POST);
-}
-else {
-    session_destroy();
-    header("Location: loginShopping-v3.php?error=true");
-}
 
+	  
+
+
+$result = null;
 $db = new PDO('mysql:host=localhost;port=3306;dbname=id9019731_llanoskimberlyshoppingcart','id9019731_llanoskimberlyshoppingcart', 'Lak3bell');
 
 
@@ -32,11 +22,30 @@ $db = new PDO('mysql:host=localhost;port=3306;dbname=id9019731_llanoskimberlysho
 $PDO = $db->prepare("SELECT password from user_table WHERE username=:username");
 $PDO->bindValue(":username", $_POST["username"], PDO::PARAM_STR);
 $PDO->execute();
+
+
 $result = $PDO->fetchAll(PDO::FETCH_ASSOC);
 
-//for debugging
-print_r($result);
-print_r($PDO);
 
+
+//for debugging
+//print_r($result);
+//print_r($PDO);
+
+if(password_verify($_POST['password'], $result[0]['password']) ) 
+{
+    $_SESSION['userAuthorized'] = $_POST['username'];
+	
+    header("Location: index-cart.php");
+
+	
+	//for debugging
+	print_r($_SESSION);
+	print_r($_POST);
+	}
+
+else {
+    session_destroy(); 
+}
 
 ?>

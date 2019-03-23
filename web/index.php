@@ -1,6 +1,10 @@
 <?php
+    session_start();
+    if(!isset($_SESSION['userAuthorized'])) {
+        session_destroy();
+        header("Location: loginShopping-v3.php");
+    }
 ?>
-
 
 <!DOCTYPE html>
 <html>
